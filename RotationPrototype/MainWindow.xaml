@@ -1,0 +1,41 @@
+﻿<Window x:Class="RotationPrototype.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RotationPrototype"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="450" Loaded="Window_Loaded" MouseLeftButtonDown="myRect_MouseLeftButtonDown" MouseMove="myRect_MouseMove" MouseLeftButtonUp="myRect_MouseLeftButtonUp">
+    <Grid>
+        <!--<Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="83*"/>
+        </Grid.ColumnDefinitions>-->
+        <!--<ToggleButton Style="{StaticResource myButtonStyle2}" x:Name="btnRotate" VerticalAlignment="Top" HorizontalAlignment="Left" Width="32" Height="32" Margin="20,20,0,0" Background="Gray" Grid.ColumnSpan="2">
+            <ToggleButton.Template>
+                <ControlTemplate>
+                    <Grid>
+                        <Image x:Name="symbol" Source="/Resources/mono-14-rotate-default.png"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ToggleButton.IsChecked" Value="true">
+                            <Setter TargetName="symbol" Property="Source" Value="/Resources/mono-14-rotate-clicked.png"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </ToggleButton.Template>
+        </ToggleButton>-->
+        <Border Background="Green" Margin="100,150,100,150" BorderBrush="Silver" BorderThickness="1">
+            <Rectangle x:Name="myRect"  Stroke="Beige" Panel.ZIndex="0" Visibility="Visible" RenderTransformOrigin="0.5, 0.5" Grid.Column="1" >
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="Beige"></SolidColorBrush>
+                </Rectangle.Fill>
+                <Rectangle.RenderTransform>
+                    <RotateTransform x:Name="myRectRotate">
+                    </RotateTransform>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+        </Border>
+
+    </Grid>
+</Window>
