@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RotationPrototype"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="450" Loaded="Window_Loaded" MouseLeftButtonDown="myRect_MouseLeftButtonDown" MouseMove="myRect_MouseMove" MouseLeftButtonUp="myRect_MouseLeftButtonUp">
+        Title="MainWindow" Height="450" Width="450" Loaded="Window_Loaded" MouseLeftButtonDown="myRect_MouseLeftButtonDown" MouseRightButtonDown="myRect_MouseRightButtonDown" MouseMove="myRect_MouseMove" MouseLeftButtonUp="myRect_MouseLeftButtonUp">
     <Grid>
         <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="7*"/>
@@ -25,15 +25,50 @@
                 </ControlTemplate>
             </ToggleButton.Template>
         </ToggleButton>-->
-        <Border Background="Green" Margin="100,150,100,150" BorderBrush="Silver" BorderThickness="1">
-            <Rectangle x:Name="myRect"  Stroke="Beige" Panel.ZIndex="0" Visibility="Visible" RenderTransformOrigin="0.5, 0.5" Grid.Column="1" >
+        <Border x:Name="myBorder" Background="Green" Margin="100,150,100,150" BorderBrush="Silver" BorderThickness="1">
+            <Rectangle x:Name="myRect"  Stroke="Beige" Panel.ZIndex="0" Visibility="Visible" Grid.Column="1"  ><!--RenderTransformOrigin="0.5, 0.5" >-->
+                <!--<Rectangle.CommandBindings>
+                    <CommandBinding Command="Rotate" Executed="Rotate_90_Executed"/>
+                    
+                </Rectangle.CommandBindings>-->
+                <!--<Rectangle.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding doubleClick}"></MouseBinding>
+                </Rectangle.InputBindings>-->
+                <Rectangle.ContextMenu>
+                    <ContextMenu x:Name="myRectMenu" Visibility="Visible">
+                        <!--<ContextMenu.Template>
+                            <ControlTemplate>
+                                <Grid>
+                                    --><!--Put anything you want in here.--><!--
+                                </Grid>
+                            </ControlTemplate>
+                        </ContextMenu.Template>-->
+                        <MenuItem x:Name="Menu_zoom" Header="Zoom in" Click="menuZoom_Clicked"/>
+                        <MenuItem Header="Take screenshot" Click="menuTsc_Clicked"/>
+                        <MenuItem Header="Take screenshot (2)" Click="menuTsc2_Clicked"/>
+                        <Separator />
+                        <MenuItem Header="Enable rotate" x:Name="menu_rttControl" IsCheckable="True" IsChecked="False">
+                        </MenuItem>
+                        <MenuItem Header="Rotate">
+                            <MenuItem x:Name="Menu_origin" Header="0&#186;" Click="menuRtt_Clicked"></MenuItem>
+                            <MenuItem x:Name="Menu_ninety" Header="90&#186;" Click="menuRtt_Clicked"></MenuItem>
+                            <MenuItem x:Name="Menu_down" Header="180&#186;" Click="menuRtt_Clicked"></MenuItem>
+                            <MenuItem x:Name="Menu_ninetydown" Header="270&#186;" Click="menuRtt_Clicked"></MenuItem>
+                        </MenuItem>
+                    </ContextMenu>
+                </Rectangle.ContextMenu>
                 <Rectangle.Fill>
-                    <SolidColorBrush Color="Beige"></SolidColorBrush>
+                    <ImageBrush x:Name="imgBrush"  ImageSource="C:\Users\sbnetHo\Downloads\LIBS\Rotation_Prototype\RotationPrototype\Resource\mono-14-rotate-default.png">
+                        <ImageBrush.RelativeTransform>
+                            <RotateTransform x:Name="myRectRotate" CenterX="0.5" CenterY="0.5">
+                            </RotateTransform>
+                        </ImageBrush.RelativeTransform>
+                    </ImageBrush>
                 </Rectangle.Fill>
-                <Rectangle.RenderTransform>
+                <!--<Rectangle.RenderTransform>
                     <RotateTransform x:Name="myRectRotate">
                     </RotateTransform>
-                </Rectangle.RenderTransform>
+                </Rectangle.RenderTransform>-->
             </Rectangle>
         </Border>
 
