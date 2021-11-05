@@ -17,7 +17,7 @@ namespace RotationPrototype
     {
         Point center;
 
-        Point size;
+        //Point size;
 
         bool inRotate;
 
@@ -38,11 +38,18 @@ namespace RotationPrototype
 
         private void myRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //if (menu_rttControl.IsChecked == false)
-            //    return;
+            if (menu_rttControl.IsChecked == false)
+                return;
             //Mouse.Capture(myRect);
             if (!inRotate)
+            {
                 inRotate = true;
+                Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                {
+                    arrowShaft.StrokeThickness = 20;
+                    arrowHead.StrokeThickness = 50;
+                }));
+            }
         }
 
         private void myRect_MouseMove(object sender, MouseEventArgs e)
@@ -54,13 +61,13 @@ namespace RotationPrototype
             {
                 Point pt = Mouse.GetPosition(this);
                 Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate {
-                    
+                    //arrowShaft.X2 = pt.X;
+                    //arrowShaft.Y2 = pt.Y;
                     // Calculate an angle
                     //if(pt.X != center.X)
                     //double rads = Math.Atan((pt.Y - myRectRotate.CenterY) / (pt.X - myRectRotate.CenterX));
                     double rads = Math.Atan((pt.Y - center.Y) / (pt.X - center.X));
                     myRectRotate.Angle = rads * 180 / Math.PI;
-                    
                     //// Apply a 180 degree shift when X is negative so that we can rotate
                     //// all of the way around
                     //if (pt.X - myRectRotate.CenterX < 0)
@@ -68,6 +75,13 @@ namespace RotationPrototype
                     {
                         myRectRotate.Angle += 180;
                     }
+
+                    arrowShaftRtt.Angle = myRectRotate.Angle;
+                    arrowHeadRtt.Angle = myRectRotate.Angle;
+                    //arrowHead.X1 = arrowHead.X2 = arrowShaft.X2 = pt.X;
+                    //arrowHead.Y1 = arrowHead.Y2 = arrowShaft.Y2 = pt.Y;
+
+
                 }));
             }
         }
@@ -76,18 +90,28 @@ namespace RotationPrototype
         {
             //Mouse.Capture(null);
             if (inRotate)
+            {
                 inRotate = false;
+                Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                {
+                    arrowShaft.StrokeThickness = 0;
+                    arrowHead.StrokeThickness = 0;
+                }));
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             inRotate = false;
 
-            size.X = this.ActualWidth;
-            size.Y = this.ActualHeight;
+            //size.X = ActualWidth;
+            //size.Y = ActualHeight;
             
-            center.X = (this.ActualWidth / 2);
-            center.Y = (this.ActualHeight / 2);
+            center.X = ActualWidth / 2;
+            center.Y = ActualHeight / 2;
+
+            //arrowShaft.X1 = center.X;
+            //arrowShaft.Y1 = center.Y;
         }
 
         private void myRect_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -111,6 +135,8 @@ namespace RotationPrototype
                 myRectRotate.Angle = 90;
             else if (item.Name == "Menu_ninetydown")
                 myRectRotate.Angle = 270;
+
+            //myRectRotate_2.Angle = myRectRotate.Angle;
         }
 
         private void menuZoom_Clicked(object sender, RoutedEventArgs e)
@@ -224,13 +250,13 @@ namespace RotationPrototype
                         DrawingVisual visual = new DrawingVisual();
                         using (DrawingContext context = visual.RenderOpen())
                         {
-                            VisualBrush brush = new VisualBrush(myRect);
+                            VisualBrush brush = new VisualBrush(this);
                             context.DrawRectangle(brush,
                                                   null,
-                                                  new Rect(new Point(), new Size(myRect.ActualWidth, myRect.ActualHeight)));
+                                                  new Rect(new Point(), new Size(this.ActualWidth, this.ActualHeight)));
                         }
 
-                        visual.Transform = new ScaleTransform(1920 / myRect.ActualWidth, 1080 / myRect.ActualHeight);
+                        visual.Transform = new ScaleTransform(1920 / this.ActualWidth, 1080 / this.ActualHeight);
 
                         bitmap.Render(visual);
 
@@ -249,6 +275,18 @@ namespace RotationPrototype
                 }
             }
 
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            //size.X = ActualWidth;
+            //size.Y = ActualHeight;
+
+            center.X = ActualWidth / 2;
+            center.Y = ActualHeight / 2;
+
+            //arrowShaft.X1 = center.X;
+            //arrowShaft.Y1 = center.Y;
         }
     }
 }
