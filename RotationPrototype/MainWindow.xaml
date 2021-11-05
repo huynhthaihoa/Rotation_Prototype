@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RotationPrototype"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="450" Loaded="Window_Loaded" MouseLeftButtonDown="myRect_MouseLeftButtonDown" MouseRightButtonDown="myRect_MouseRightButtonDown" MouseMove="myRect_MouseMove" MouseLeftButtonUp="myRect_MouseLeftButtonUp">
+        Title="MainWindow" Height="450" Width="450" Background="Aqua" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" >
     <Grid>
         <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="7*"/>
@@ -25,52 +25,91 @@
                 </ControlTemplate>
             </ToggleButton.Template>
         </ToggleButton>-->
-        <Border x:Name="myBorder" Background="Green" Margin="100,150,100,150" BorderBrush="Silver" BorderThickness="1">
-            <Rectangle x:Name="myRect"  Stroke="Beige" Panel.ZIndex="0" Visibility="Visible" Grid.Column="1"  ><!--RenderTransformOrigin="0.5, 0.5" >-->
-                <!--<Rectangle.CommandBindings>
+        <!--<Border x:Name="myBorder" Background="Green" Margin="100,150,100,150" BorderBrush="Silver" BorderThickness="1" Panel.ZIndex="0">
+        </Border>-->
+        <Rectangle x:Name="myRect"  Stroke="Beige" Panel.ZIndex="0" Visibility="Visible" Grid.Column="1"  MouseLeftButtonDown="myRect_MouseLeftButtonDown" MouseRightButtonDown="myRect_MouseRightButtonDown" MouseMove="myRect_MouseMove" MouseLeftButtonUp="myRect_MouseLeftButtonUp">
+            <!--RenderTransformOrigin="0.5, 0.5" >-->
+            <!--<Rectangle.CommandBindings>
                     <CommandBinding Command="Rotate" Executed="Rotate_90_Executed"/>
                     
                 </Rectangle.CommandBindings>-->
-                <!--<Rectangle.InputBindings>
+            <!--<Rectangle.InputBindings>
                     <MouseBinding Gesture="LeftDoubleClick" Command="{Binding doubleClick}"></MouseBinding>
                 </Rectangle.InputBindings>-->
-                <Rectangle.ContextMenu>
-                    <ContextMenu x:Name="myRectMenu" Visibility="Visible">
-                        <!--<ContextMenu.Template>
+            <Rectangle.ContextMenu>
+                <ContextMenu x:Name="myRectMenu" Visibility="Visible">
+                    <!--<ContextMenu.Template>
                             <ControlTemplate>
                                 <Grid>
-                                    --><!--Put anything you want in here.--><!--
+                                    -->
+                    <!--Put anything you want in here.-->
+                    <!--
                                 </Grid>
                             </ControlTemplate>
                         </ContextMenu.Template>-->
-                        <MenuItem x:Name="Menu_zoom" Header="Zoom in" Click="menuZoom_Clicked"/>
-                        <MenuItem Header="Take screenshot" Click="menuTsc_Clicked"/>
-                        <MenuItem Header="Take screenshot (2)" Click="menuTsc2_Clicked"/>
-                        <Separator />
-                        <MenuItem Header="Enable rotate" x:Name="menu_rttControl" IsCheckable="True" IsChecked="False">
-                        </MenuItem>
-                        <MenuItem Header="Rotate">
-                            <MenuItem x:Name="Menu_origin" Header="0&#186;" Click="menuRtt_Clicked"></MenuItem>
-                            <MenuItem x:Name="Menu_ninety" Header="90&#186;" Click="menuRtt_Clicked"></MenuItem>
-                            <MenuItem x:Name="Menu_down" Header="180&#186;" Click="menuRtt_Clicked"></MenuItem>
-                            <MenuItem x:Name="Menu_ninetydown" Header="270&#186;" Click="menuRtt_Clicked"></MenuItem>
-                        </MenuItem>
-                    </ContextMenu>
-                </Rectangle.ContextMenu>
-                <Rectangle.Fill>
-                    <ImageBrush x:Name="imgBrush"  ImageSource="C:\Users\sbnetHo\Downloads\LIBS\Rotation_Prototype\RotationPrototype\Resource\mono-14-rotate-default.png">
-                        <ImageBrush.RelativeTransform>
-                            <RotateTransform x:Name="myRectRotate" CenterX="0.5" CenterY="0.5">
-                            </RotateTransform>
-                        </ImageBrush.RelativeTransform>
-                    </ImageBrush>
-                </Rectangle.Fill>
-                <!--<Rectangle.RenderTransform>
+                    <MenuItem x:Name="Menu_zoom" Header="Zoom in" Click="menuZoom_Clicked"/>
+                    <MenuItem Header="Take screenshot" Click="menuTsc_Clicked"/>
+                    <MenuItem Header="Take screenshot (2)" Click="menuTsc2_Clicked"/>
+                    <Separator />
+                    <MenuItem Header="Enable rotate" x:Name="menu_rttControl" IsCheckable="True" IsChecked="False">
+                    </MenuItem>
+                    <MenuItem Header="Rotate">
+                        <MenuItem x:Name="Menu_origin" Header="0&#186;" Click="menuRtt_Clicked"></MenuItem>
+                        <MenuItem x:Name="Menu_ninety" Header="90&#186;" Click="menuRtt_Clicked"></MenuItem>
+                        <MenuItem x:Name="Menu_down" Header="180&#186;" Click="menuRtt_Clicked"></MenuItem>
+                        <MenuItem x:Name="Menu_ninetydown" Header="270&#186;" Click="menuRtt_Clicked"></MenuItem>
+                    </MenuItem>
+                </ContextMenu>
+            </Rectangle.ContextMenu>
+            <Rectangle.Fill>
+                <ImageBrush x:Name="imgBrush"  ImageSource="C:\Users\sbnetHo\Downloads\LIBS\Rotation_Prototype\RotationPrototype\Resource\IOTrack.ico">
+                    <ImageBrush.RelativeTransform>
+                        <RotateTransform x:Name="myRectRotate" CenterX="0.5" CenterY="0.5">
+                        </RotateTransform>
+                    </ImageBrush.RelativeTransform>
+                </ImageBrush>
+
+            </Rectangle.Fill>
+            <!--<Rectangle.RenderTransform>
                     <RotateTransform x:Name="myRectRotate">
                     </RotateTransform>
                 </Rectangle.RenderTransform>-->
-            </Rectangle>
-        </Border>
-
+        </Rectangle>
+        <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Height="450" Width="450">
+            <Line Opacity="0.3" x:Name="arrowShaft" X1="225" Y1="225" X2="275" Y2="225" Stroke="Red" StrokeThickness="0">
+                <Line.RenderTransform>
+                    <RotateTransform x:Name="arrowShaftRtt" CenterX="225" CenterY="225"/>
+                    <!--<ScaleTransform x:Name="arrowShaftScales"></ScaleTransform>-->
+                </Line.RenderTransform>
+            </Line>
+            <Line Opacity="0.3" x:Name="arrowHead" X1="275" Y1="225" X2="275" Y2="225" Stroke="Red" StrokeEndLineCap="Triangle" StrokeThickness="0">
+                <Line.RenderTransform>
+                    <RotateTransform x:Name="arrowHeadRtt" CenterX="225" CenterY="225"/>
+                </Line.RenderTransform>
+            </Line>
+        </Canvas>
+        <!--<Canvas HorizontalAlignment="Center" Height="450" Width="450">
+            -->
+        <!--<Canvas.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Canvas.RenderTransform>-->
+        <!--
+            <Line x:Name="arrowShaft"  Stroke="#ffffff" StrokeThickness="0"/>
+            <Line x:Name="arrowHead" Stroke="#ffffff" StrokeEndLineCap="Triangle" StrokeThickness="0"/>
+        </Canvas>-->
+        <!--<Path Stretch="Fill" Fill="LimeGreen" 
+          Data="M 0,110 70,110 45,90 75,90 120,120 75,150 45,150 70,130 0,130 Z"
+          HorizontalAlignment="Left"  Width="30" Height="24" Margin="225,205,0,205" Panel.ZIndex="1"
+          RenderTransformOrigin="0.5, 0.5">
+            <Path.RenderTransform>
+                <RotateTransform x:Name="myRectRotate_2" Angle="0" />
+            </Path.RenderTransform>
+        </Path>-->
     </Grid>
 </Window>
+ 
